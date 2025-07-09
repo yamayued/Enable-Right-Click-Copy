@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Icons</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        function createIcon(size) {
+            const canvas = document.getElementById('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Green background
+            ctx.fillStyle = '#4CAF50';
+            ctx.fillRect(0, 0, size, size);
+            
+            // White cursor/click symbol
+            ctx.strokeStyle = 'white';
+            ctx.fillStyle = 'white';
+            ctx.lineWidth = size >= 48 ? 3 : 2;
+            
+            if (size >= 48) {
+                // Draw mouse shape
+                const padding = size * 0.2;
+                ctx.beginPath();
+                ctx.moveTo(size/2, padding);
+                ctx.lineTo(size - padding, size - padding);
+                ctx.lineTo(size/2, size * 0.7);
+                ctx.lineTo(padding, size - padding);
+                ctx.closePath();
+                ctx.fill();
+            } else {
+                // Simple circle for small icon
+                ctx.beginPath();
+                ctx.arc(size/2, size/2, size/3, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            // Download link
+            const link = document.createElement('a');
+            link.download = 'icon' + size + '.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Create all three sizes
+        setTimeout(() => createIcon(16), 100);
+        setTimeout(() => createIcon(48), 300);
+        setTimeout(() => createIcon(128), 500);
+        
+        document.write('Icons created! Please save them as icon16.png, icon48.png, and icon128.png');
+    </script>
+</body>
+</html>
